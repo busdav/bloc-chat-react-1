@@ -20,13 +20,13 @@ export class RoomList extends Component {
   }
 
   deleteRoom(roomKey) {
-    let room = this.props.firebase.database().ref("rooms/" + roomKey);
+    const room = this.props.firebase.database().ref("rooms/" + roomKey);
     room.remove();
   }
 
   componentDidMount() {
     this.roomsRef.on('value', snapshot => {
-      let roomChanges = [];
+      const roomChanges = [];
       snapshot.forEach((room) => {
         roomChanges.push({
           key: room.key,

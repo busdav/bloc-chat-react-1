@@ -14,7 +14,7 @@ class App extends Component {
   }
 
 activeRoom(room) {
-  this.setState({ activeRoom: room })
+  this.setState({ activeRoom: room });
 }
 
 setUser(user) {
@@ -27,7 +27,7 @@ setUser(user) {
 
     return (
       <div>
-        <h1>{this.state.activeRoom.title || "Select A Room"}</h1>
+        <h1>{this.state.activeRoom.title || "Select a Room"}</h1>
         <User firebase={firebase} setUser={this.setUser} welcome={currentUser} />
         <RoomList firebase={firebase} activeRoom={this.activeRoom} />
         { showMessages ?
