@@ -3,14 +3,16 @@ import React, { Component } from 'react';
 export class RoomList extends Component {
   constructor(props) {
     super(props);
-      this.state = {title: "", rooms: []};
+      this.state = {title: "", rooms: [], toEdit: ""};
       this.roomsRef = this.props.firebase.database().ref("rooms");
       this.handleChange = this.handleChange.bind(this);
       this.createRoom = this.createRoom.bind(this);
+      this.editRoom = this.editRoom.bind(this);
+      this.updateRoom = this.updateRoom.bind(this);
   }
 
   handleChange(e) {
-    this.setState({ title: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   createRoom(e) {
@@ -22,6 +24,24 @@ export class RoomList extends Component {
   deleteRoom(roomKey) {
     const room = this.props.firebase.database().ref("rooms/" + roomKey);
     room.remove();
+  }
+
+  editRoom(room) {
+    const editRoom = (
+      <form onSubmit={this.updateRoom}>
+        <input type="text" defaultValue={room.title} ref={(input) => this.input = input}/>
+        <input type="submit" value="Update" />
+        <button type="button" onClick={() => this.setState({toEdit: ""})}>Cancel</button>
+      </form>
+    );
+    return editRoom;
+  }
+
+  updateRoom(e) {
+    e.preventDefault();
+    const updates = {[this.state.toEdit + "/title"]: this.input.value};
+    this.roomsRef.update(updates);
+    this.setState({ toEdit: ""});
   }
 
   componentDidMount() {
@@ -44,15 +64,22 @@ export class RoomList extends Component {
   render() {
     const roomForm = (
       <form onSubmit={this.createRoom}>
-        <input type="text" value={this.state.title} placeholder="Enter Room Name" onChange={this.handleChange}/>
+        <input type="text" name="title" value={this.state.title} placeholder="Enter Room Name" onChange={this.handleChange}/>
         <input type="submit" value="Create" />
       </form>
     );
 
     const roomList = this.state.rooms.map((room) =>
-      <li key={room.key} onClick={(e) => this.selectRoom(room, e)}>
-        {room.title}
-        <button onClick={() => this.deleteRoom(room.key)}>Remove</button>
+      <li key={room.key}>
+        {this.state.toEdit === room.key ?
+          this.editRoom(room)
+        :
+        <div>
+          <h3 onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
+          <button onClick={() => this.deleteRoom(room.key)}>Remove</button>
+          <button onClick={() => this.setState({toEdit: room.key})}>Edit</button>
+        </div>
+        }
       </li>
     );
 

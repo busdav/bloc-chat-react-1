@@ -8,7 +8,7 @@ import { User } from './components/User.js';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {activeRoom: "", user: null};
+    this.state = {activeRoom: "", user: ""};
     this.activeRoom = this.activeRoom.bind(this);
     this.setUser = this.setUser.bind(this);
   }
