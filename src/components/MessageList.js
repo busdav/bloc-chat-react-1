@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 export class MessageList extends Component {
   constructor(props) {
     super(props);
-      this.state = { username: "", content: "", sentAt: "", messages: []};
+      this.state = { username: "", content: "", sentAt: "", messages: [], toEdit: ""};
       this.handleChange = this.handleChange.bind(this);
       this.createMessage = this.createMessage.bind(this);
+      this.editMessage = this.editMessage.bind(this);
+      this.updateMessage = this.updateMessage.bind(this);
   }
 
   handleChange(e) {
@@ -26,6 +28,25 @@ export class MessageList extends Component {
       sentAt: this.state.sentAt
     });
     this.setState({ username: "", content: "", sentAt: "", roomId: "" });
+  }
+
+  editMessage(message) {
+    const editMessage= (
+      <form onSubmit={this.updateMessage}>
+        <input type="text" defaultValue={message.content} ref={(input) => this.input = input}/>
+        <input type="submit" value="Update" />
+        <button type="button" onClick={() => this.setState({toEdit: ""})}>Cancel</button>
+      </form>
+    );
+    return editMessage;
+  }
+
+  updateMessage(e) {
+    e.preventDefault();
+    const messagesRef = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/messages");
+    const updates = {[this.state.toEdit + "/content"]: this.input.value};
+    messagesRef.update(updates);
+    this.setState({ toEdit: ""});
   }
 
   componentDidMount() {
@@ -71,9 +92,19 @@ export class MessageList extends Component {
     );
 
     const messageList = (
-      this.state.messages.map((message) => {
-          return <li key={message.key}>{message.username}: {message.content}</li>
-      })
+      this.state.messages.map((message) =>
+        <li key={message.key}>
+          <h2>{message.username}:</h2>
+          {(this.state.toEdit === message.key) && (this.props.user === message.username) ?
+            this.editMessage(message)
+            :
+            <div>
+              <h3>{message.content}</h3>
+              <button onClick={() => this.setState({toEdit: message.key})}>Edit</button>
+            </div>
+          }
+        </li>
+      )
     );
 
     return(
