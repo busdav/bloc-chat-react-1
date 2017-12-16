@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Col } from 'react-bootstrap';
 
 export class MessageList extends Component {
   constructor(props) {
@@ -108,10 +109,10 @@ export class MessageList extends Component {
     );
 
     return(
-      <div>
+      <Col xs={12}>
         <div>{messageBar}</div>
         <ul>{messageList}</ul>
-      </div>
+      </Col>
     );
   }
 }

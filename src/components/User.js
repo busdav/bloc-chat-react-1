@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Col } from 'react-bootstrap';
 
 export class User extends Component {
   constructor(props) {
@@ -29,14 +30,14 @@ componentDidMount() {
 
   render() {
     return(
-      <div>
+      <Col xs={12}>
         <h3>Welcome, {this.props.welcome}</h3>
         { this.props.welcome === "Guest" ?
           <button onClick={this.signIn}>Sign In</button>
           :
           <button onClick={this.signOut}>Sign Out</button>
         }
-      </div>
+      </Col>
     )
   }
 }

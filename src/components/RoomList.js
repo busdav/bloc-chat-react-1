@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Col, Navbar, Nav, NavItem } from 'react-bootstrap';
 
 export class RoomList extends Component {
   constructor(props) {
@@ -70,7 +71,7 @@ export class RoomList extends Component {
     );
 
     const roomList = this.state.rooms.map((room) =>
-      <li key={room.key}>
+      <NavItem key={room.key}>
         {this.state.toEdit === room.key ?
           this.editRoom(room)
         :
@@ -80,14 +81,16 @@ export class RoomList extends Component {
           <button onClick={() => this.setState({toEdit: room.key})}>Edit</button>
         </div>
         }
-      </li>
+      </NavItem>
     );
 
     return(
-      <div>
-        <div>{roomForm}</div>
-        <ul>{roomList}</ul>
-      </div>
+      <Col xs={12}>
+        <Navbar.Form>{roomForm}</Navbar.Form>
+        <Nav stacked>
+          {roomList}
+        </Nav>
+      </Col>
     );
   }
 }

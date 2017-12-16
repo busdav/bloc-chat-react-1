@@ -4,6 +4,7 @@ import firebase from './firebase.js';
 import { RoomList } from './components/RoomList.js';
 import { MessageList } from './components/MessageList.js';
 import { User } from './components/User.js';
+import { Grid, Row, Col, Navbar } from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {
@@ -26,15 +27,31 @@ setUser(user) {
     const currentUser = this.state.user === null ? "Guest" : this.state.user.displayName;
 
     return (
-      <div>
-        <h1>{this.state.activeRoom.title || "Select a Room"}</h1>
-        <User firebase={firebase} setUser={this.setUser} welcome={currentUser} />
-        <RoomList firebase={firebase} activeRoom={this.activeRoom} />
-        { showMessages ?
-          <MessageList firebase={firebase} activeRoom={this.state.activeRoom.key} user={this.state.user.displayName} />
-        : null
-        }
-      </div>
+      <Grid fluid>
+        <Row className="show-grid main-row">
+          <Col xs={3}>
+            <Navbar fluid>
+              <Navbar.Header>
+                <Navbar.Brand><h1>Bloc Chat</h1></Navbar.Brand>
+                <Navbar.Toggle />
+              </Navbar.Header>
+              <Navbar.Collapse>
+                <Col xs={12}>
+                  <h2>{this.state.activeRoom.title || "Select a Room"}</h2>
+                </Col>
+                <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+              </Navbar.Collapse>
+            </Navbar>
+          </Col>
+          <Col xs={9}>
+            <User firebase={firebase} setUser={this.setUser} welcome={currentUser} />
+            { showMessages ?
+              <MessageList firebase={firebase} activeRoom={this.state.activeRoom.key} user={this.state.user.displayName} />
+            : null
+            }
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
