@@ -29,7 +29,7 @@ setUser(user) {
     return (
       <Grid fluid>
         <Row className="show-grid main-row">
-          <Col xs={3}>
+          <Col xs={3} className="nav-section">
             <Navbar fluid>
               <Navbar.Header>
                 <Navbar.Brand><h1>Bloc Chat</h1></Navbar.Brand>
@@ -43,7 +43,7 @@ setUser(user) {
               </Navbar.Collapse>
             </Navbar>
           </Col>
-          <Col xs={9}>
+          <Col xs={9} className="message-section">
             <User firebase={firebase} setUser={this.setUser} welcome={currentUser} />
             { showMessages ?
               <MessageList firebase={firebase} activeRoom={this.state.activeRoom.key} user={this.state.user.displayName} />
