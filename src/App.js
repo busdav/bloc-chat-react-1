@@ -39,15 +39,27 @@ setUser(user) {
                 <Col xs={12}>
                   <h2>{this.state.activeRoom.title || "Select a Room"}</h2>
                 </Col>
-                <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+                <RoomList
+                  firebase={firebase}
+                  activeRoom={this.activeRoom}
+                  user={this.state.user.email}
+                />
               </Navbar.Collapse>
             </Navbar>
           </Col>
           <Col xs={9} className="message-section">
-            <User firebase={firebase} setUser={this.setUser} welcome={currentUser} />
+            <User
+              firebase={firebase}
+              setUser={this.setUser}
+              welcome={currentUser}
+            />
             { showMessages ?
-              <MessageList firebase={firebase} activeRoom={this.state.activeRoom.key} user={this.state.user.displayName} />
-            : null
+              <MessageList
+                firebase={firebase}
+                activeRoom={this.state.activeRoom.key}
+                user={this.state.user.displayName}
+              />
+              : null
             }
           </Col>
         </Row>

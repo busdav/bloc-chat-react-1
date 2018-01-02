@@ -32,7 +32,7 @@ export class MessageList extends Component {
   }
 
   editMessage(message) {
-    const editMessage= (
+    const editMessage = (
       <form onSubmit={this.updateMessage}>
         <input type="text" defaultValue={message.content} ref={(input) => this.input = input}/>
         <input type="submit" value="Update" />
@@ -101,7 +101,10 @@ export class MessageList extends Component {
             :
             <div>
               <h3>{message.content}</h3>
+            {this.props.user === message.username ?
               <button onClick={() => this.setState({toEdit: message.key})}>Edit</button>
+              : null
+            }
             </div>
           }
         </li>

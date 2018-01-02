@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Col, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Col, Navbar } from 'react-bootstrap';
 
 export class RoomList extends Component {
   constructor(props) {
     super(props);
-      this.state = {title: "", rooms: [], toEdit: ""};
+      this.state = {title: "", creator: "", rooms: [], toEdit: ""};
       this.roomsRef = this.props.firebase.database().ref("rooms");
       this.handleChange = this.handleChange.bind(this);
       this.createRoom = this.createRoom.bind(this);
@@ -13,13 +13,17 @@ export class RoomList extends Component {
   }
 
   handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value,
+      creator: this.props.user
+    });
   }
 
   createRoom(e) {
     e.preventDefault();
-    this.roomsRef.push({ title: this.state.title });
-    this.setState({ title: "" });
+    this.roomsRef.push({ title: this.state.title, creator: this.state.creator });
+    this.setState({ title: "", creator: ""});
   }
 
   deleteRoom(roomKey) {
@@ -51,7 +55,8 @@ export class RoomList extends Component {
       snapshot.forEach((room) => {
         roomChanges.push({
           key: room.key,
-          title: room.val().title
+          title: room.val().title,
+          creator: room.val().creator
         });
       });
       this.setState({ rooms: roomChanges})
@@ -71,25 +76,28 @@ export class RoomList extends Component {
     );
 
     const roomList = this.state.rooms.map((room) =>
-      <NavItem key={room.key}>
+      <li key={room.key}>
         {this.state.toEdit === room.key ?
           this.editRoom(room)
         :
         <div>
           <h3 onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
-          <button onClick={() => this.deleteRoom(room.key)}>Remove</button>
-          <button onClick={() => this.setState({toEdit: room.key})}>Edit</button>
+          {this.props.user === room.creator ?
+            <div>
+              <button onClick={() => this.deleteRoom(room.key)}>Remove</button>
+              <button onClick={() => this.setState({toEdit: room.key})}>Edit</button>
+            </div>
+          : null
+          }
         </div>
         }
-      </NavItem>
+      </li>
     );
 
     return(
       <Col xs={12}>
         <Navbar.Form>{roomForm}</Navbar.Form>
-        <Nav stacked>
-          {roomList}
-        </Nav>
+        <ul>{roomList}</ul>
       </Col>
     );
   }
