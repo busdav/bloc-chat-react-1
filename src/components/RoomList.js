@@ -29,6 +29,7 @@ export class RoomList extends Component {
   deleteRoom(roomKey) {
     const room = this.props.firebase.database().ref("rooms/" + roomKey);
     room.remove();
+    this.props.activeRoom("");
   }
 
   editRoom(room) {

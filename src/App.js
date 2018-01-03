@@ -9,7 +9,7 @@ import { Grid, Row, Col, Navbar } from 'react-bootstrap';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {activeRoom: "", user: ""};
+    this.state = {activeRoom: "", user: null};
     this.activeRoom = this.activeRoom.bind(this);
     this.setUser = this.setUser.bind(this);
   }
@@ -23,8 +23,32 @@ setUser(user) {
 }
 
   render() {
-    const showMessages = this.state.activeRoom;
-    const currentUser = this.state.user === null ? "Guest" : this.state.user.displayName;
+    let messageList;
+    let currentUser;
+    let roomList;
+    if (this.state.user !== null) {
+      roomList = (
+        <RoomList
+          firebase={firebase}
+          activeRoom={this.activeRoom}
+          user={this.state.user.email}
+        />
+      );
+      currentUser = this.state.user.displayName;
+    }
+    else {
+      currentUser = "Guest";
+    }
+
+    if (this.state.user !== null && this.state.activeRoom) {
+      messageList = (
+        <MessageList
+          firebase={firebase}
+          activeRoom={this.state.activeRoom.key}
+          user={this.state.user.displayName}
+        />
+      );
+    }
 
     return (
       <Grid fluid>
@@ -39,11 +63,7 @@ setUser(user) {
                 <Col xs={12}>
                   <h2>{this.state.activeRoom.title || "Select a Room"}</h2>
                 </Col>
-                <RoomList
-                  firebase={firebase}
-                  activeRoom={this.activeRoom}
-                  user={this.state.user.email}
-                />
+                {roomList}
               </Navbar.Collapse>
             </Navbar>
           </Col>
@@ -53,14 +73,7 @@ setUser(user) {
               setUser={this.setUser}
               welcome={currentUser}
             />
-            { showMessages ?
-              <MessageList
-                firebase={firebase}
-                activeRoom={this.state.activeRoom.key}
-                user={this.state.user.displayName}
-              />
-              : null
-            }
+            {messageList}
           </Col>
         </Row>
       </Grid>
