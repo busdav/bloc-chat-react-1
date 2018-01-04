@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './styles/App.css';
 import firebase from './firebase.js';
 import { RoomList } from './components/RoomList.js';
 import { MessageList } from './components/MessageList.js';
@@ -51,23 +51,30 @@ setUser(user) {
     }
 
     return (
-      <Grid fluid>
+      <Grid fluid className="main">
         <Row className="show-grid main-row">
-          <Col xs={3} className="nav-section">
+
+          <Col sm={3} xs={12} className="sidenav">
             <Navbar fluid>
               <Navbar.Header>
-                <Navbar.Brand><h1>Bloc Chat</h1></Navbar.Brand>
+                <Navbar.Brand>
+                  <h1 onClick={() => this.setState({ activeRoom: "" })}>
+                    Bloc Chat
+                  </h1>
+                </Navbar.Brand>
                 <Navbar.Toggle />
               </Navbar.Header>
               <Navbar.Collapse>
-                <Col xs={12}>
+                <Col xs={12} className="room-section">
                   <h2>{this.state.activeRoom.title || "Select a Room"}</h2>
                 </Col>
                 {roomList}
               </Navbar.Collapse>
             </Navbar>
           </Col>
-          <Col xs={9} className="message-section">
+
+
+          <Col sm={9} xs={12} className="message-section">
             <User
               firebase={firebase}
               setUser={this.setUser}
@@ -75,6 +82,7 @@ setUser(user) {
             />
             {messageList}
           </Col>
+
         </Row>
       </Grid>
     );

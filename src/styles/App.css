@@ -1,0 +1,50 @@
+.message-section {
+  background-color: pink;
+}
+
+.navbar-default {
+  background: none;
+  border: none;
+}
+
+ @media (min-width: 768px) {
+   .main-row {
+     min-height: 100%;
+     display: flex;
+   }
+
+   .sidenav {
+     background-color: purple;
+     display: flex;
+     flex-direction: column;
+   }
+
+   .message-section {
+     display: flex;
+     flex-direction: column;
+   }
+
+   .navbar-default {
+     position: fixed;
+     left: 0;
+   }
+ }
+
+ @media (max-width: 767px) {
+   .main {
+    background-color: pink;
+   }
+
+   .sidenav .navbar {
+     position: fixed;
+     z-index: 2;
+     top: 0;
+     right: 0;
+     left: 0;
+     margin: 0;
+   }
+
+   .navbar-default .navbar-header, .navbar-default .navbar-collapse {
+     background-color: purple;
+   }
+ }

@@ -1,0 +1,11 @@
+.login-section {
+  position: fixed;
+  height: 3rem;
+  z-index: 1;
+}
+
+ @media (max-width: 767px) {
+   .login-section {
+     padding-top: 3rem;
+   }
+}

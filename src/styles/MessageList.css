@@ -1,0 +1,12 @@
+#message-bar {
+  background-color: blue;
+  position: fixed;
+  bottom: 0;
+  height: 5rem;
+  z-index: 1;
+}
+
+.message-list {
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}

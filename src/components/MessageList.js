@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
+import '.././styles/MessageList.css';
 
 export class MessageList extends Component {
   constructor(props) {
@@ -112,10 +113,21 @@ export class MessageList extends Component {
     );
 
     return(
-      <Col xs={12}>
-        <div>{messageBar}</div>
-        <ul>{messageList}</ul>
-      </Col>
+      <Row className="show-grid message-list-bar">
+        <Col xs={12} className="message-list-bar">
+
+          <Row className="show-grid">
+            <Col xs={12} className="message-list">
+              <ul>{messageList}</ul>
+            </Col>
+          </Row>
+
+          <Row className="show-grid">
+            <Col xs={12} id="message-bar">{messageBar}</Col>
+          </Row>
+
+        </Col>
+      </Row>
     );
   }
 }
