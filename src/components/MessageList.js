@@ -5,11 +5,19 @@ import '.././styles/MessageList.css';
 export class MessageList extends Component {
   constructor(props) {
     super(props);
-      this.state = { username: "", content: "", sentAt: "", messages: [], toEdit: ""};
+      this.state = { username: "", content: "", sentAt: "", messages: [], toEdit: "", isTyping: false};
       this.handleChange = this.handleChange.bind(this);
       this.createMessage = this.createMessage.bind(this);
       this.editMessage = this.editMessage.bind(this);
       this.updateMessage = this.updateMessage.bind(this);
+      this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+
+  handleKeyDown(e) {
+    this.setState({isTyping: true});
+    setTimeout(() => {
+      this.setState({isTyping: false});
+    }, 2000);
   }
 
   handleChange(e) {
@@ -29,7 +37,7 @@ export class MessageList extends Component {
       content: this.state.content,
       sentAt: this.state.sentAt
     });
-    this.setState({ username: "", content: "", sentAt: "", roomId: "" });
+    this.setState({ username: "", content: "", sentAt: "", roomId: "", isTyping: false });
   }
 
   editMessage(message) {
@@ -86,9 +94,16 @@ export class MessageList extends Component {
   }
 
   render() {
+    const userTyping = this.state.isTyping;
     const messageBar = (
       <form onSubmit={this.createMessage}>
-        <input type="text" value={this.state.content} placeholder="Enter Message" onChange={this.handleChange}/>
+        <input
+          type="text"
+          value={this.state.content}
+          placeholder="Enter Message"
+          onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
+        />
         <input type="submit" value="Send" />
       </form>
     );
@@ -96,7 +111,10 @@ export class MessageList extends Component {
     const messageList = (
       this.state.messages.map((message) =>
         <li key={message.key}>
-          <h2>{message.username}:</h2>
+          <h2>
+            {message.username}
+            <span><small>{message.username === this.props.user && userTyping ? " is typing..." : ":"}</small></span>
+          </h2>
           {(this.state.toEdit === message.key) && (this.props.user === message.username) ?
             this.editMessage(message)
             :
