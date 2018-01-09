@@ -71,8 +71,13 @@ export class MessageList extends Component {
             sentAt: message.val().sentAt
           });
       });
-      this.setState({ messages: messageChanges})
+      this.setState({ messages: messageChanges});
+      this.latestMessage.scrollIntoView();
     });
+  }
+
+  componentDidUpdate() {
+    this.latestMessage.scrollIntoView();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -88,7 +93,8 @@ export class MessageList extends Component {
               sentAt: message.val().sentAt
             });
         });
-        this.setState({ messages: messageChanges})
+        this.setState({ messages: messageChanges});
+        this.latestMessage.scrollIntoView();
       });
     }
   }
@@ -137,6 +143,7 @@ export class MessageList extends Component {
           <Row className="show-grid">
             <Col xs={12} className="message-list">
               <ul>{messageList}</ul>
+              <div ref={(latest) => this.latestMessage = latest} />
             </Col>
           </Row>
 
