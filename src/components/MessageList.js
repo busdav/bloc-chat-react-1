@@ -5,7 +5,7 @@ import '.././styles/MessageList.css';
 export class MessageList extends Component {
   constructor(props) {
     super(props);
-      this.state = { username: "", content: "", sentAt: "", messages: [], toEdit: "", isTyping: false};
+      this.state = {username: "", content: "", sentAt: "", messages: [], toEdit: "", isTyping: false};
       this.handleChange = this.handleChange.bind(this);
       this.createMessage = this.createMessage.bind(this);
       this.editMessage = this.editMessage.bind(this);
@@ -30,8 +30,20 @@ export class MessageList extends Component {
   }
 
   createMessage(e) {
+    const participant = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/participants");
     const messagesRef = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/messages");
     e.preventDefault();
+
+    //become a room participant
+    messagesRef.orderByChild("username").equalTo(this.state.username).once("value", snapshot => {
+      if (!snapshot.val()) {
+        participant.push({
+          username: this.state.username
+        });
+      }
+    });
+
+    //create message
     messagesRef.push({
       username: this.state.username,
       content: this.state.content,

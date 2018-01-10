@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './styles/App.css';
 import firebase from './firebase.js';
 import { RoomList } from './components/RoomList.js';
+import { RoomParticipants } from './components/RoomParticipants.js';
 import { MessageList } from './components/MessageList.js';
 import { User } from './components/User.js';
 import { Grid, Row, Col, Navbar } from 'react-bootstrap';
@@ -26,6 +27,7 @@ setUser(user) {
     let messageList;
     let currentUser;
     let roomList;
+    let roomParticipants;
     if (this.state.user !== null) {
       roomList = (
         <RoomList
@@ -43,6 +45,13 @@ setUser(user) {
     if (this.state.user !== null && this.state.activeRoom) {
       messageList = (
         <MessageList
+          firebase={firebase}
+          activeRoom={this.state.activeRoom.key}
+          user={this.state.user.displayName}
+        />
+      );
+      roomParticipants = (
+        <RoomParticipants
           firebase={firebase}
           activeRoom={this.state.activeRoom.key}
           user={this.state.user.displayName}
@@ -67,6 +76,7 @@ setUser(user) {
               <Navbar.Collapse>
                 <Col xs={12} className="room-section">
                   <h2>{this.state.activeRoom.title || "Select a Room"}</h2>
+                    {roomParticipants}
                 </Col>
                 {roomList}
               </Navbar.Collapse>
