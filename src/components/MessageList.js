@@ -5,7 +5,7 @@ import '.././styles/MessageList.css';
 export class MessageList extends Component {
   constructor(props) {
     super(props);
-      this.state = {username: "", content: "", sentAt: "", messages: [], toEdit: "", isTyping: false};
+      this.state = {username: "", content: "", sentAt: "", messages: [], toEdit: ""};
       this.handleChange = this.handleChange.bind(this);
       this.createMessage = this.createMessage.bind(this);
       this.editMessage = this.editMessage.bind(this);
@@ -14,9 +14,26 @@ export class MessageList extends Component {
   }
 
   handleKeyDown(e) {
-    this.setState({isTyping: true});
+    const participant = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/participants");
+    //user typing
+    participant.orderByChild("username").equalTo(this.props.user).once("value", snapshot => {
+      if (snapshot.val()) {
+        snapshot.forEach((item) => {
+          const updates = {[item.key + "/isTyping"]: true};
+          participant.update(updates);
+        });
+      }
+    });
+    //user not typing
     setTimeout(() => {
-      this.setState({isTyping: false});
+      participant.orderByChild("username").equalTo(this.props.user).once("value", snapshot => {
+        if (snapshot.val()) {
+          snapshot.forEach((item) => {
+            const updates = {[item.key + "/isTyping"]: false};
+            participant.update(updates);
+          });
+        }
+      });
     }, 2000);
   }
 
@@ -38,7 +55,8 @@ export class MessageList extends Component {
     messagesRef.orderByChild("username").equalTo(this.state.username).once("value", snapshot => {
       if (!snapshot.val()) {
         participant.push({
-          username: this.state.username
+          username: this.state.username,
+          isTyping: false
         });
       }
     });
@@ -49,7 +67,7 @@ export class MessageList extends Component {
       content: this.state.content,
       sentAt: this.state.sentAt
     });
-    this.setState({ username: "", content: "", sentAt: "", roomId: "", isTyping: false });
+    this.setState({ username: "", content: "", sentAt: "", roomId: ""});
   }
 
   editMessage(message) {
@@ -112,7 +130,6 @@ export class MessageList extends Component {
   }
 
   render() {
-    const userTyping = this.state.isTyping;
     const messageBar = (
       <form onSubmit={this.createMessage}>
         <input
@@ -129,10 +146,7 @@ export class MessageList extends Component {
     const messageList = (
       this.state.messages.map((message) =>
         <li key={message.key}>
-          <h2>
-            {message.username}
-            <span><small>{message.username === this.props.user && userTyping ? " is typing..." : ":"}</small></span>
-          </h2>
+          <h2>{message.username}:</h2>
           {(this.state.toEdit === message.key) && (this.props.user === message.username) ?
             this.editMessage(message)
             :

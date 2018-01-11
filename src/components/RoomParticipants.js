@@ -13,7 +13,8 @@ export class RoomParticipants extends Component {
       snapshot.forEach((participant) => {
           participantChanges.push({
             key: participant.key,
-            username: participant.val().username
+            username: participant.val().username,
+            isTyping: participant.val().isTyping
           });
       });
       this.setState({ participants: participantChanges});
@@ -28,7 +29,8 @@ export class RoomParticipants extends Component {
         snapshot.forEach((participant) => {
             participantChanges.push({
               key: participant.key,
-              username: participant.val().username
+              username: participant.val().username,
+              isTyping: participant.val().isTyping
             });
         });
         this.setState({ participants: participantChanges});
@@ -39,7 +41,12 @@ export class RoomParticipants extends Component {
   render() {
     const roomParticipants = (
       this.state.participants.map((participant) =>
-        <h6 key={participant.key}>{participant.username}</h6>
+      <div key={participant.key}>
+        <h4>
+          {participant.username}
+          <span><small>{participant.isTyping ? " is typing..." : null}</small></span>
+        </h4>
+      </div>
       )
     );
     return(
