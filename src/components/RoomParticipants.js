@@ -7,32 +7,38 @@ export class RoomParticipants extends Component {
   }
 
   componentDidMount() {
-    const roomRef = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/participants");
-    roomRef.on('value', snapshot => {
+    const userRef = this.props.firebase.database().ref("presence/");
+    userRef.orderByChild("currentRoom").equalTo(this.props.activeRoom).on('value', snapshot => {
       const participantChanges = [];
-      snapshot.forEach((participant) => {
-          participantChanges.push({
-            key: participant.key,
-            username: participant.val().username,
-            isTyping: participant.val().isTyping
+        if (snapshot.val()) {
+          snapshot.forEach((participant) => {
+            participantChanges.push({
+              key: participant.key,
+              username: participant.val().username,
+              isTyping: participant.val().isTyping,
+              isOnline: participant.val().isOnline
+            });
           });
-      });
+        }
       this.setState({ participants: participantChanges});
     });
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.activeRoom !== this.props.activeRoom) {
-      const roomRef = this.props.firebase.database().ref("rooms/" + nextProps.activeRoom + "/participants");
-      roomRef.on('value', snapshot => {
+      const userRef = this.props.firebase.database().ref("presence/");
+      userRef.orderByChild("currentRoom").equalTo(nextProps.activeRoom).on('value', snapshot => {
         const participantChanges = [];
-        snapshot.forEach((participant) => {
-            participantChanges.push({
-              key: participant.key,
-              username: participant.val().username,
-              isTyping: participant.val().isTyping
+          if (snapshot.val()) {
+            snapshot.forEach((participant) => {
+              participantChanges.push({
+                key: participant.key,
+                username: participant.val().username,
+                isTyping: participant.val().isTyping,
+                isOnline: participant.val().isOnline
+              });
             });
-        });
+          }
         this.setState({ participants: participantChanges});
       });
     }

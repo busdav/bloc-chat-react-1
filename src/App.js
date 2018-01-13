@@ -15,13 +15,16 @@ class App extends Component {
     this.setUser = this.setUser.bind(this);
   }
 
-activeRoom(room) {
-  this.setState({ activeRoom: room });
-}
+  activeRoom(room) {
+    this.setState({ activeRoom: room });
+    const userRef = firebase.database().ref("presence/" + this.state.user.uid);
+    const roomKey = room === "" ? "" : room.key;
+    userRef.update({currentRoom: roomKey});
+  }
 
-setUser(user) {
-  this.setState({ user: user });
-}
+  setUser(user) {
+    this.setState({ user: user });
+  }
 
   render() {
     let messageList;
@@ -47,14 +50,13 @@ setUser(user) {
         <MessageList
           firebase={firebase}
           activeRoom={this.state.activeRoom.key}
-          user={this.state.user.displayName}
+          user={this.state.user}
         />
       );
       roomParticipants = (
         <RoomParticipants
           firebase={firebase}
           activeRoom={this.state.activeRoom.key}
-          user={this.state.user.displayName}
         />
       );
     }
@@ -67,9 +69,7 @@ setUser(user) {
             <Navbar fluid>
               <Navbar.Header>
                 <Navbar.Brand>
-                  <h1 onClick={() => this.setState({ activeRoom: "" })}>
-                    Bloc Chat
-                  </h1>
+                  <h1>Bloc Chat</h1>
                 </Navbar.Brand>
                 <Navbar.Toggle />
               </Navbar.Header>

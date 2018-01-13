@@ -18,6 +18,10 @@ signIn() {
 }
 
 signOut() {
+  this.props.firebase.auth().onAuthStateChanged(user => {
+    const userRef = this.props.firebase.database().ref("presence/" + user.uid);
+    userRef.update({isOnline: false, currentRoom: ""});
+  });
   this.props.firebase.auth().signOut().then(() => {
     this.props.setUser(null);
   });
@@ -26,6 +30,14 @@ signOut() {
 componentDidMount() {
   this.props.firebase.auth().onAuthStateChanged(user => {
     this.props.setUser(user);
+    const isOnline = this.props.firebase.database().ref(".info/connected");
+    const userRef = this.props.firebase.database().ref("presence/" + user.uid);
+    isOnline.on("value", snapshot => {
+      if (snapshot.val()) {
+        userRef.update({username: user.displayName, isOnline: true});
+        userRef.onDisconnect().update({isOnline: false, currentRoom: ""});
+      }
+    });
   });
 }
 

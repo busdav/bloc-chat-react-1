@@ -28,7 +28,9 @@ export class RoomList extends Component {
 
   deleteRoom(roomKey) {
     const room = this.props.firebase.database().ref("rooms/" + roomKey);
+    const roomMessages = this.props.firebase.database().ref("messages/" + roomKey)
     room.remove();
+    roomMessages.remove();
     this.props.activeRoom("");
   }
 
@@ -60,7 +62,7 @@ export class RoomList extends Component {
           creator: room.val().creator
         });
       });
-      this.setState({ rooms: roomChanges})
+      this.setState({ rooms: roomChanges});
     });
   }
 

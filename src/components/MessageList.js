@@ -14,60 +14,31 @@ export class MessageList extends Component {
   }
 
   handleKeyDown(e) {
-    const participant = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/participants");
-    //user typing
-    participant.orderByChild("username").equalTo(this.props.user).once("value", snapshot => {
-      if (snapshot.val()) {
-        snapshot.forEach((item) => {
-          const updates = {[item.key + "/isTyping"]: true};
-          participant.update(updates);
-        });
-      }
-    });
-    //user not typing
+    const userRef = this.props.firebase.database().ref("presence/" + this.props.user.uid);
+    userRef.update({isTyping: true});
     setTimeout(() => {
-      participant.orderByChild("username").equalTo(this.props.user).once("value", snapshot => {
-        if (snapshot.val()) {
-          snapshot.forEach((item) => {
-            const updates = {[item.key + "/isTyping"]: false};
-            participant.update(updates);
-          });
-        }
-      });
+      userRef.update({isTyping: false});
     }, 2000);
   }
 
   handleChange(e) {
     e.preventDefault();
     this.setState({
-      username: this.props.user,
+      username: this.props.user.displayName,
       content: e.target.value,
       sentAt: this.props.firebase.database.ServerValue.TIMESTAMP
     });
   }
 
   createMessage(e) {
-    const participant = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/participants");
-    const messagesRef = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/messages");
+    const messagesRef = this.props.firebase.database().ref("messages/" + this.props.activeRoom);
     e.preventDefault();
-
-    //become a room participant
-    messagesRef.orderByChild("username").equalTo(this.state.username).once("value", snapshot => {
-      if (!snapshot.val()) {
-        participant.push({
-          username: this.state.username,
-          isTyping: false
-        });
-      }
-    });
-
-    //create message
     messagesRef.push({
       username: this.state.username,
       content: this.state.content,
       sentAt: this.state.sentAt
     });
-    this.setState({ username: "", content: "", sentAt: "", roomId: ""});
+    this.setState({ username: "", content: "", sentAt: ""});
   }
 
   editMessage(message) {
@@ -83,14 +54,14 @@ export class MessageList extends Component {
 
   updateMessage(e) {
     e.preventDefault();
-    const messagesRef = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/messages");
+    const messagesRef = this.props.firebase.database().ref("messages/" + this.props.activeRoom);
     const updates = {[this.state.toEdit + "/content"]: this.input.value};
     messagesRef.update(updates);
     this.setState({ toEdit: ""});
   }
 
   componentDidMount() {
-    const messagesRef = this.props.firebase.database().ref("rooms/" + this.props.activeRoom + "/messages");
+    const messagesRef = this.props.firebase.database().ref("messages/" + this.props.activeRoom);
     messagesRef.on('value', snapshot => {
       const messageChanges = [];
       snapshot.forEach((message) => {
@@ -112,7 +83,7 @@ export class MessageList extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.activeRoom !== this.props.activeRoom) {
-      const messagesRef =  this.props.firebase.database().ref("rooms/" + nextProps.activeRoom + "/messages");
+      const messagesRef =  this.props.firebase.database().ref("messages/" + nextProps.activeRoom);
       messagesRef.on('value', snapshot => {
         let messageChanges = [];
         snapshot.forEach((message) => {
@@ -147,12 +118,12 @@ export class MessageList extends Component {
       this.state.messages.map((message) =>
         <li key={message.key}>
           <h2>{message.username}:</h2>
-          {(this.state.toEdit === message.key) && (this.props.user === message.username) ?
+          {(this.state.toEdit === message.key) && (this.props.user.displayName === message.username) ?
             this.editMessage(message)
             :
             <div>
               <h3>{message.content}</h3>
-            {this.props.user === message.username ?
+            {this.props.user.displayName === message.username ?
               <button onClick={() => this.setState({toEdit: message.key})}>Edit</button>
               : null
             }
