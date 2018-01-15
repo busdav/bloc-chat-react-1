@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Navbar } from 'react-bootstrap';
+import '.././styles/RoomList.css';
 
 export class RoomList extends Component {
   constructor(props) {
@@ -98,7 +99,7 @@ export class RoomList extends Component {
     );
 
     return(
-      <Col xs={12}>
+      <Col xs={12} className="room-list">
         <Navbar.Form>{roomForm}</Navbar.Form>
         <ul>{roomList}</ul>
       </Col>

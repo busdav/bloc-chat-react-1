@@ -31,13 +31,15 @@ componentDidMount() {
   this.props.firebase.auth().onAuthStateChanged(user => {
     this.props.setUser(user);
     const isOnline = this.props.firebase.database().ref(".info/connected");
-    const userRef = this.props.firebase.database().ref("presence/" + user.uid);
-    isOnline.on("value", snapshot => {
-      if (snapshot.val()) {
-        userRef.update({username: user.displayName, isOnline: true});
-        userRef.onDisconnect().update({isOnline: false, currentRoom: ""});
-      }
-    });
+    if (user) {
+      const userRef = this.props.firebase.database().ref("presence/" + user.uid);
+      isOnline.on("value", snapshot => {
+        if (snapshot.val()) {
+          userRef.update({username: user.displayName, isOnline: true});
+          userRef.onDisconnect().update({isOnline: false, currentRoom: ""});
+        }
+      });
+    }
   });
 }
 
