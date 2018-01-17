@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Navbar } from 'react-bootstrap';
+import { Col, Navbar, DropdownButton, MenuItem, FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
 import '.././styles/RoomList.css';
 
 export class RoomList extends Component {
@@ -37,11 +37,23 @@ export class RoomList extends Component {
 
   editRoom(room) {
     const editRoom = (
-      <form onSubmit={this.updateRoom}>
-        <input type="text" defaultValue={room.title} ref={(input) => this.input = input}/>
-        <input type="submit" value="Update" />
-        <button type="button" onClick={() => this.setState({toEdit: ""})}>Cancel</button>
-      </form>
+      <div className="room-edit">
+        <form onSubmit={this.updateRoom}>
+          <FormGroup>
+            <InputGroup>
+              <FormControl type="text" defaultValue={room.title} inputRef={(input) => this.input = input} />
+              <InputGroup.Button>
+                <Button type="submit" alt="update">
+                  <i className="fa fa-check"></i>
+                </Button>
+                <Button type="button" alt="cancel" onClick={() => this.setState({toEdit: ""})}>
+                  <i className="fa fa-times"></i>
+                </Button>
+              </InputGroup.Button>
+            </InputGroup>
+          </FormGroup>
+        </form>
+      </div>
     );
     return editRoom;
   }
@@ -74,8 +86,14 @@ export class RoomList extends Component {
   render() {
     const roomForm = (
       <form onSubmit={this.createRoom}>
-        <input type="text" name="title" value={this.state.title} placeholder="Enter Room Name" onChange={this.handleChange}/>
-        <input type="submit" value="Create" />
+        <FormGroup>
+          <InputGroup>
+            <FormControl type="text" name="title" value={this.state.title} placeholder="New Room" onChange={this.handleChange}/>
+            <InputGroup.Button>
+              <Button type="submit">Create</Button>
+            </InputGroup.Button>
+          </InputGroup>
+        </FormGroup>
       </form>
     );
 
@@ -84,15 +102,15 @@ export class RoomList extends Component {
         {this.state.toEdit === room.key ?
           this.editRoom(room)
         :
-        <div>
+        <div className="room-block">
+            {this.props.user === room.creator ?
+              <DropdownButton title="" id="bg-nested-dropdown" className="room-options">
+                <MenuItem onClick={() => this.setState({toEdit: room.key})}>Edit</MenuItem>
+                <MenuItem onClick={() => this.deleteRoom(room.key)}>Delete</MenuItem>
+              </DropdownButton>
+            : <div id="no-options"></div>
+            }
           <h3 onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
-          {this.props.user === room.creator ?
-            <div>
-              <button onClick={() => this.deleteRoom(room.key)}>Remove</button>
-              <button onClick={() => this.setState({toEdit: room.key})}>Edit</button>
-            </div>
-          : null
-          }
         </div>
         }
       </li>

@@ -1,0 +1,50 @@
+.room-list, .room-list ul, .room-section {
+  padding: 0;
+}
+
+.room-list li {
+  list-style: none;
+}
+
+.room-list h3 {
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: inline;
+  vertical-align: middle;
+}
+
+.room-list h3:hover {
+  cursor: pointer;
+}
+
+.room-options {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
+  background: none;
+}
+
+.room-options .caret {
+  color: #3a8db7;
+}
+
+#no-options {
+  display: inline-block;
+  vertical-align: middle;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
+}
+
+.room-block, .room-edit {
+  margin-bottom: 1rem;
+}
+
+.fa-check {
+  color: #21ce63;
+}
+
+.fa-times {
+  color: #e04028
+}

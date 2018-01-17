@@ -19,8 +19,10 @@ signIn() {
 
 signOut() {
   this.props.firebase.auth().onAuthStateChanged(user => {
-    const userRef = this.props.firebase.database().ref("presence/" + user.uid);
-    userRef.update({isOnline: false, currentRoom: ""});
+    if (user !== null) {
+      const userRef = this.props.firebase.database().ref("presence/" + user.uid);
+      userRef.update({isOnline: false, currentRoom: ""});
+    }
   });
   this.props.firebase.auth().signOut().then(() => {
     this.props.setUser(null);
