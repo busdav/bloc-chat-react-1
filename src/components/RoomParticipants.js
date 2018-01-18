@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+import '.././styles/RoomParticipants.css';
 
 export class RoomParticipants extends Component {
   constructor(props) {
     super(props);
-    this.state = {participants: []};
+    this.state = {participants: [], isOpen: true};
+    this.toggleList = this.toggleList.bind(this);
+  }
+
+  toggleList() {
+    this.setState( prevState => ({
+      isOpen: !prevState.isOpen
+    }));
   }
 
   componentDidMount() {
@@ -55,9 +64,12 @@ export class RoomParticipants extends Component {
       </div>
       )
     );
+
     return(
-      <div>
-        {roomParticipants}
+      <div className="participants-section">
+        <p>Room Paricipants</p>
+        <Button bsSize="small" onClick={this.toggleList}>{this.state.isOpen ? "Hide" : "Show"}</Button>
+        {this.state.isOpen ? roomParticipants : null }
       </div>
     );
   }
