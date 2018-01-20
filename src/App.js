@@ -74,6 +74,11 @@ class App extends Component {
                 <Navbar.Toggle />
               </Navbar.Header>
               <Navbar.Collapse>
+                <User
+                  firebase={firebase}
+                  setUser={this.setUser}
+                  welcome={currentUser}
+                />
                 <Col xs={12} className="room-section">
                   <h2>{this.state.activeRoom.title || "Select a Room"}</h2>
                     {roomParticipants}
@@ -83,13 +88,7 @@ class App extends Component {
             </Navbar>
           </Col>
 
-
           <Col sm={9} xs={12} className="message-section">
-            <User
-              firebase={firebase}
-              setUser={this.setUser}
-              welcome={currentUser}
-            />
             {messageList}
           </Col>
 

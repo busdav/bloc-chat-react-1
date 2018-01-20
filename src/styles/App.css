@@ -43,19 +43,13 @@
     padding: 0;
   }
 
-  .navbar::-webkit-scrollbar  {
-    background-color: #f9fbfc;
-    width: 1.5rem;
-  }
-
-  .navbar::-webkit-scrollbar-track {
+  .navbar::-webkit-scrollbar, .navbar::-webkit-scrollbar-track  {
     background-color: #f9fbfc;
   }
 
   .navbar::-webkit-scrollbar-thumb {
     background-color: #5e5e5e;
   }
-
 }
 
 @media (max-width: 767px) {

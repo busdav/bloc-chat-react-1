@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
 import '.././styles/User.css';
 
 export class User extends Component {
@@ -47,16 +46,14 @@ componentDidMount() {
 
   render() {
     return(
-      <Row className="show-grid">
-        <Col xs={12} className="login-section">
-          <h3>Welcome, {this.props.welcome}</h3>
-          { this.props.welcome === "Guest" ?
-            <button onClick={this.signIn}>Sign In</button>
-            :
-            <button onClick={this.signOut}>Sign Out</button>
-          }
-        </Col>
-      </Row>
+      <div className="login-section">
+        <h5>Welcome, {this.props.welcome}</h5>
+        { this.props.welcome === "Guest" ?
+          <h6 onClick={this.signIn}>Sign In <i className="fa fa-sign-in"></i></h6>
+          :
+          <h6 onClick={this.signOut}>Sign Out <i className="fa fa-sign-out"></i></h6>
+        }
+      </div>
     )
   }
 }

@@ -1,11 +1,15 @@
-.login-section {
-  position: fixed;
-  height: 3rem;
-  z-index: 1;
+@media (min-width: 768px) {
+  .login-section {
+    clear: both;
+  }
+  
+  .login-section h6:hover {
+    cursor: pointer;
+  }
 }
 
- @media (max-width: 767px) {
-   .login-section {
-     padding-top: 3rem;
-   }
+@media (max-width: 767px) {
+  .login-section {
+    text-align: right;
+  }
 }
