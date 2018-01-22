@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Col, FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
 import '.././styles/MessageList.css';
 
 export class MessageList extends Component {
@@ -44,9 +44,15 @@ export class MessageList extends Component {
   editMessage(message) {
     const editMessage = (
       <form onSubmit={this.updateMessage}>
-        <input type="text" defaultValue={message.content} ref={(input) => this.input = input}/>
-        <input type="submit" value="Update" />
-        <button type="button" onClick={() => this.setState({toEdit: ""})}>Cancel</button>
+        <FormGroup>
+          <InputGroup>
+            <FormControl type="text" defaultValue={message.content} inputRef={(input) => this.input = input}/>
+              <InputGroup.Button>
+                <Button type="submit">Update</Button>
+                <Button onClick={() => this.setState({toEdit: ""})}>Cancel</Button>
+              </InputGroup.Button>
+          </InputGroup>
+        </FormGroup>
       </form>
     );
     return editMessage;
@@ -103,30 +109,36 @@ export class MessageList extends Component {
   render() {
     const messageBar = (
       <form onSubmit={this.createMessage}>
-        <input
-          type="text"
-          value={this.state.content}
-          placeholder="Enter Message"
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
-        />
-        <input type="submit" value="Send" />
+        <FormGroup>
+          <InputGroup>
+          <FormControl
+            type="text"
+            value={this.state.content}
+            placeholder="Enter Message"
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyDown}
+          />
+          <InputGroup.Button>
+            <Button type="submit">Send</Button>
+          </InputGroup.Button>
+          </InputGroup>
+        </FormGroup>
       </form>
     );
 
     const messageList = (
       this.state.messages.map((message) =>
         <li key={message.key}>
-          <h2>{message.username}:</h2>
+          <h4>{message.username}</h4>
           {(this.state.toEdit === message.key) && (this.props.user.displayName === message.username) ?
             this.editMessage(message)
             :
             <div>
-              <h3>{message.content}</h3>
             {this.props.user.displayName === message.username ?
-              <button onClick={() => this.setState({toEdit: message.key})}>Edit</button>
+              <span className="fa fa-wrench" onClick={() => this.setState({toEdit: message.key})}></span>
               : null
             }
+              <p>{message.content}</p>
             </div>
           }
         </li>
@@ -134,22 +146,13 @@ export class MessageList extends Component {
     );
 
     return(
-      <Row className="show-grid message-list-bar">
         <Col xs={12} className="message-list-bar">
-
-          <Row className="show-grid">
             <Col xs={12} className="message-list">
               <ul>{messageList}</ul>
               <div ref={(latest) => this.latestMessage = latest} />
             </Col>
-          </Row>
-
-          <Row className="show-grid">
             <Col xs={12} id="message-bar">{messageBar}</Col>
-          </Row>
-
         </Col>
-      </Row>
     );
   }
 }

@@ -1,17 +1,40 @@
 #message-bar {
-  background-color: blue;
+  background-color: #d1b3b3;
   position: fixed;
   bottom: 0;
+  right: 0;
   height: 5rem;
   z-index: 1;
+  padding-top: 1rem;
+}
+
+.message-list-bar, #message-bar {
+  width: inherit;
 }
 
 .message-list {
-  padding-bottom: 5rem;
+  padding-bottom: 6rem;
+}
+
+.message-list ul {
+  padding: 0;
+}
+
+.message-list li {
+  list-style: none;
+}
+
+.fa-wrench {
+  float: left;
+  padding-right: 1rem;
+}
+
+.fa-wrench:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 767px) {
   .message-list {
-    padding-top: 6rem;
+    padding-top: 7rem;
   }
 }
