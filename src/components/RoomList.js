@@ -104,7 +104,7 @@ export class RoomList extends Component {
         :
         <div className="room-block">
             {this.props.user === room.creator ?
-              <DropdownButton title="" id="bg-nested-dropdown" className="room-options">
+              <DropdownButton noCaret title={<span className="fa fa-angle-double-down"></span>} id="bg-nested-dropdown" className="room-options">
                 <MenuItem onClick={() => this.setState({toEdit: room.key})}>Edit</MenuItem>
                 <MenuItem onClick={() => this.deleteRoom(room.key)}>Delete</MenuItem>
               </DropdownButton>

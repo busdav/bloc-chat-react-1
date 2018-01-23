@@ -48,8 +48,12 @@ export class MessageList extends Component {
           <InputGroup>
             <FormControl type="text" defaultValue={message.content} inputRef={(input) => this.input = input}/>
               <InputGroup.Button>
-                <Button type="submit">Update</Button>
-                <Button onClick={() => this.setState({toEdit: ""})}>Cancel</Button>
+                <Button type="submit" alt="update">
+                  <i className="fa fa-check"></i>
+                </Button>
+                <Button type="button" alt="cancel" onClick={() => this.setState({toEdit: ""})}>
+                  <i className="fa fa-times"></i>
+                </Button>
               </InputGroup.Button>
           </InputGroup>
         </FormGroup>
@@ -84,7 +88,9 @@ export class MessageList extends Component {
   }
 
   componentDidUpdate() {
-    this.latestMessage.scrollIntoView();
+    if (!this.state.toEdit) {
+      this.latestMessage.scrollIntoView();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -134,10 +140,14 @@ export class MessageList extends Component {
             this.editMessage(message)
             :
             <div>
-            {this.props.user.displayName === message.username ?
-              <span className="fa fa-wrench" onClick={() => this.setState({toEdit: message.key})}></span>
-              : null
-            }
+              {this.props.user.displayName === message.username ?
+                <span
+                  className="fa fa-wrench edit-msg"
+                  onClick={() => this.setState({toEdit: message.key})}
+                />
+                :
+                <div className="no-edit-msg" />
+              }
               <p>{message.content}</p>
             </div>
           }

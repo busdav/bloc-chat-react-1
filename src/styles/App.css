@@ -1,5 +1,5 @@
 .message-section {
-  background-color: pink;
+  background-color: #efe7d1;
 }
 
 .navbar-default {
@@ -45,16 +45,18 @@
 
   .navbar::-webkit-scrollbar, .navbar::-webkit-scrollbar-track  {
     background-color: #f9fbfc;
+    width: 1.25rem;
   }
 
   .navbar::-webkit-scrollbar-thumb {
-    background-color: #5e5e5e;
+    background-color: #a39ea1;
+    width: 1.25rem;
   }
 }
 
 @media (max-width: 767px) {
   .main {
-    background-color: pink;
+    background-color: #efe7d1;
   }
 
   .navbar-default {

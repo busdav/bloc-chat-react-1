@@ -1,5 +1,5 @@
 #message-bar {
-  background-color: #d1b3b3;
+  background-color: rgba(209, 179, 179, 0.79);
   position: fixed;
   bottom: 0;
   right: 0;
@@ -24,13 +24,24 @@
   list-style: none;
 }
 
-.fa-wrench {
-  float: left;
-  padding-right: 1rem;
+.message-list p {
+  display: inline;
+  font-size: 1.5rem;
 }
 
-.fa-wrench:hover {
+.fa-wrench.edit-msg {
+  float: left;
+  padding-right: 1rem;
+  font-size: 1.25rem;
+}
+
+.fa-wrench.edit-msg:hover {
   cursor: pointer;
+}
+
+.no-edit-msg {
+  display: inline-block;
+  width: 2.25rem;
 }
 
 @media (max-width: 767px) {
