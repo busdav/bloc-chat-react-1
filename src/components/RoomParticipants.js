@@ -67,8 +67,8 @@ export class RoomParticipants extends Component {
 
     return(
       <div className="participants-section">
-        <p>Room Paricipants</p>
-        <Button bsSize="small" onClick={this.toggleList}>{this.state.isOpen ? "Hide" : "Show"}</Button>
+        <p className="participants-heading">Room Paricipants</p>
+        <Button className="hide-participants-btn" bsSize="small" onClick={this.toggleList}>{this.state.isOpen ? "Hide" : "Show"}</Button>
         {this.state.isOpen ? roomParticipants : null }
       </div>
     );

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:700');
 
-.room-section h2 {
+.active-room {
   font-family: "Raleway", sans-serif;
   color: #a79292;
   font-size: 3rem;
@@ -14,7 +14,7 @@
   list-style: none;
 }
 
-.room-list h3 {
+.room-title {
   font-family: "Raleway", sans-serif;
   font-size: 2rem;
   margin-top: 0;
@@ -23,8 +23,9 @@
   vertical-align: middle;
 }
 
-.room-list h3:hover {
+.room-title:hover {
   cursor: pointer;
+  color: #c7a3bc;
 }
 
 .room-options {
@@ -35,7 +36,7 @@
   background: none;
 }
 
-#no-options {
+.no-options {
   display: inline-block;
   vertical-align: middle;
   width: 3rem;

@@ -80,7 +80,7 @@ class App extends Component {
                   welcome={currentUser}
                 />
                 <Col xs={12} className="room-section">
-                  <h2>{this.state.activeRoom.title || "Select a Room"}</h2>
+                  <h2 className="active-room">{this.state.activeRoom.title || "Select a Room"}</h2>
                     {roomParticipants}
                 </Col>
                 {roomList}

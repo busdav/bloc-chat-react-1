@@ -108,9 +108,9 @@ export class RoomList extends Component {
                 <MenuItem onClick={() => this.setState({toEdit: room.key})}>Edit</MenuItem>
                 <MenuItem onClick={() => this.deleteRoom(room.key)}>Delete</MenuItem>
               </DropdownButton>
-            : <div id="no-options"></div>
+            : <div className="no-options"></div>
             }
-          <h3 onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
+          <h3 className="room-title" onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
         </div>
         }
       </li>

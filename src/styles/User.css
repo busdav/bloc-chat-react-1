@@ -1,10 +1,11 @@
+.login-section h6:hover {
+  cursor: pointer;
+  color: #c7a3bc;
+}
+
 @media (min-width: 768px) {
   .login-section {
     clear: both;
-  }
-  
-  .login-section h6:hover {
-    cursor: pointer;
   }
 }
 

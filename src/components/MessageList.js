@@ -148,7 +148,7 @@ export class MessageList extends Component {
                 :
                 <div className="no-edit-msg" />
               }
-              <p>{message.content}</p>
+              <p className="msg-content">{message.content}</p>
             </div>
           }
         </li>
@@ -161,7 +161,7 @@ export class MessageList extends Component {
               <ul>{messageList}</ul>
               <div ref={(latest) => this.latestMessage = latest} />
             </Col>
-            <Col xs={12} id="message-bar">{messageBar}</Col>
+            <Col xs={12} className="message-bar">{messageBar}</Col>
         </Col>
     );
   }
