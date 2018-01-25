@@ -55,3 +55,21 @@
 .fa-times {
   color: #e04028
 }
+
+.room-transition-enter {
+  color: #a79292;
+}
+
+.room-transition-enter.room-transition-enter-active {
+  color: #16020d;;
+  transition: color 500ms ease-in;
+}
+
+.room-transition-exit {
+  opacity: 1;
+}
+
+.room-transition-exit.room-transition-exit.active {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}

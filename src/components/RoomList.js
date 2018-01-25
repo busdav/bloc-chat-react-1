@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Navbar, DropdownButton, MenuItem, FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import '.././styles/RoomList.css';
 
 export class RoomList extends Component {
@@ -98,28 +99,36 @@ export class RoomList extends Component {
     );
 
     const roomList = this.state.rooms.map((room) =>
-      <li key={room.key}>
-        {this.state.toEdit === room.key ?
-          this.editRoom(room)
-        :
-        <div className="room-block">
-            {this.props.user === room.creator ?
-              <DropdownButton noCaret title={<span className="fa fa-angle-double-down"></span>} id="bg-nested-dropdown" className="room-options">
-                <MenuItem onClick={() => this.setState({toEdit: room.key})}>Edit</MenuItem>
-                <MenuItem onClick={() => this.deleteRoom(room.key)}>Delete</MenuItem>
-              </DropdownButton>
-            : <div className="no-options"></div>
+      <CSSTransition
+        key={room.key}
+        classNames="room-transition"
+        timeout={{ enter: 500, exit: 300 }}>
+          <li>
+            {this.state.toEdit === room.key ?
+              this.editRoom(room)
+            :
+            <div className="room-block">
+                {this.props.user === room.creator ?
+                  <DropdownButton noCaret title={<span className="fa fa-angle-double-down"></span>} id="bg-nested-dropdown" className="room-options">
+                    <MenuItem onClick={() => this.setState({toEdit: room.key})}>Edit</MenuItem>
+                    <MenuItem onClick={() => this.deleteRoom(room.key)}>Delete</MenuItem>
+                  </DropdownButton>
+                : <div className="no-options"></div>
+                }
+              <h3 className="room-title" onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
+            </div>
             }
-          <h3 className="room-title" onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
-        </div>
-        }
-      </li>
+          </li>
+      </CSSTransition>
     );
 
     return(
       <Col xs={12} className="room-list">
         <Navbar.Form>{roomForm}</Navbar.Form>
-        <ul>{roomList}</ul>
+        <TransitionGroup
+          component="ul">
+            {roomList}
+        </TransitionGroup>
       </Col>
     );
   }

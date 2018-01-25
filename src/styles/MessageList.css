@@ -25,6 +25,10 @@
   list-style: none;
 }
 
+.msg-username {
+  color: #a0a0a0;
+}
+
 .msg-content {
   display: inline;
   font-size: 1.5rem;
@@ -43,6 +47,15 @@
 .no-edit-msg {
   display: inline-block;
   width: 2.25rem;
+}
+
+.message-transition-enter {
+  opacity: 0.75;
+}
+
+.message-transition-enter.message-transition-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
 }
 
 @media (max-width: 767px) {

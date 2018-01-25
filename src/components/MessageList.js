@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Col, FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import '.././styles/MessageList.css';
 
 export class MessageList extends Component {
@@ -132,10 +133,13 @@ export class MessageList extends Component {
       </form>
     );
 
-    const messageList = (
-      this.state.messages.map((message) =>
-        <li key={message.key}>
-          <h4>{message.username}</h4>
+    const messageList = this.state.messages.map((message) =>
+      <CSSTransition
+        key={message.key}
+        classNames="message-transition"
+        timeout={200}>
+        <li>
+          <h4 className="msg-username">{message.username}</h4>
           {(this.state.toEdit === message.key) && (this.props.user.displayName === message.username) ?
             this.editMessage(message)
             :
@@ -152,13 +156,16 @@ export class MessageList extends Component {
             </div>
           }
         </li>
-      )
+      </CSSTransition>
     );
 
     return(
         <Col xs={12} className="message-list-bar">
             <Col xs={12} className="message-list">
-              <ul>{messageList}</ul>
+              <TransitionGroup
+                component="ul">
+                  {messageList}
+              </TransitionGroup>
               <div ref={(latest) => this.latestMessage = latest} />
             </Col>
             <Col xs={12} className="message-bar">{messageBar}</Col>
