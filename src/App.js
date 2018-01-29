@@ -88,9 +88,7 @@ class App extends Component {
             </Navbar>
           </Col>
 
-          <Col sm={9} xs={12} className="message-section">
-            {messageList}
-          </Col>
+          {messageList}
 
         </Row>
       </Grid>

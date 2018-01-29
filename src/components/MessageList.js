@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import Moment from 'react-moment';
 import '.././styles/MessageList.css';
 
 export class MessageList extends Component {
@@ -140,6 +141,12 @@ export class MessageList extends Component {
         timeout={200}>
         <li>
           <h4 className="msg-username">{message.username}</h4>
+            <Moment
+              element="span"
+              format="MM/DD/YY hh:mm A"
+              className="msg-sent-at">
+              {message.sentAt}
+            </Moment>
           {(this.state.toEdit === message.key) && (this.props.user.displayName === message.username) ?
             this.editMessage(message)
             :
@@ -160,7 +167,7 @@ export class MessageList extends Component {
     );
 
     return(
-        <Col xs={12} className="message-list-bar">
+        <Col sm={9} xs={12} className="message-section">
             <Col xs={12} className="message-list">
               <TransitionGroup
                 component="ul">

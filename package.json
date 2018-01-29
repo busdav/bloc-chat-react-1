@@ -5,9 +5,11 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "firebase": "^4.6.2",
+    "moment": "^2.20.1",
     "react": "^16.1.1",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.1.1",
+    "react-moment": "^0.7.0",
     "react-scripts": "1.0.17",
     "react-transition-group": "^2.2.1"
   },
