@@ -5,3 +5,13 @@
 .hide-participants-btn {
   float: right;
 }
+
+.participant-name {
+  font-size: 1rem;
+}
+
+@media (max-width: 991px) and (min-width: 767px) {
+  .participant-name {
+    font-size: .85rem;
+  }
+}

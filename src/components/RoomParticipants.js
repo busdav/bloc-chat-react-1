@@ -57,7 +57,7 @@ export class RoomParticipants extends Component {
     const roomParticipants = (
       this.state.participants.map((participant) =>
       <div key={participant.key}>
-        <h4>
+        <h4 className="participant-name">
           {participant.username}
           <span><small>{participant.isTyping ? " is typing..." : null}</small></span>
         </h4>

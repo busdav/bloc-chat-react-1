@@ -4,14 +4,14 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  height: 5rem;
+  height: 3.25rem;
   z-index: 1;
-  padding-top: 1rem;
+  padding-top: .75rem;
   width: inherit;
 }
 
 .message-list {
-  padding-bottom: 6rem;
+  padding-bottom: 4rem;
 }
 
 .message-list ul {
@@ -28,13 +28,13 @@
 
 .msg-content {
   display: inline;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .fa-wrench.edit-msg {
   float: left;
   padding-right: 1rem;
-  font-size: 1.25rem;
+  font-size: .75rem;
 }
 
 .fa-wrench.edit-msg:hover {
@@ -43,12 +43,12 @@
 
 .no-edit-msg {
   display: inline-block;
-  width: 2.25rem;
+  width: 1.5rem;
 }
 
 .msg-sent-at {
   float: right;
-  font-size: 1.25rem;
+  font-size: .75rem;
 }
 
 .message-transition-enter {
@@ -62,6 +62,6 @@
 
 @media (max-width: 767px) {
   .message-list {
-    padding-top: 7rem;
+    padding-top: 5rem;
   }
 }

@@ -4,16 +4,20 @@ html, body, #root, .container-fluid {
   height: 100%;
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
   font-family: "Roboto", sans-serif;
 }
 
 body::-webkit-scrollbar, .navbar::-webkit-scrollbar-track  {
   background-color: #f9fbfc;
-  width: 1.25rem;
+  width: .75rem;
 }
 
 body::-webkit-scrollbar-thumb {
   background-color: #a39ea1;
-  width: 1.25rem;
+  width: .75rem;
 }
