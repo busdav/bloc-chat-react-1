@@ -24,8 +24,7 @@ export class RoomParticipants extends Component {
             participantChanges.push({
               key: participant.key,
               username: participant.val().username,
-              isTyping: participant.val().isTyping,
-              isOnline: participant.val().isOnline
+              isTyping: participant.val().isTyping
             });
           });
         }
@@ -43,8 +42,7 @@ export class RoomParticipants extends Component {
               participantChanges.push({
                 key: participant.key,
                 username: participant.val().username,
-                isTyping: participant.val().isTyping,
-                isOnline: participant.val().isOnline
+                isTyping: participant.val().isTyping
               });
             });
           }

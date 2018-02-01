@@ -20,7 +20,7 @@ signOut() {
   this.props.firebase.auth().onAuthStateChanged(user => {
     if (user !== null) {
       const userRef = this.props.firebase.database().ref("presence/" + user.uid);
-      userRef.update({isOnline: false, currentRoom: ""});
+      userRef.update({isOnline: false, currentRoom: "", roomName: ""});
     }
   });
   this.props.firebase.auth().signOut().then(() => {

@@ -5,6 +5,7 @@ import { RoomList } from './components/RoomList.js';
 import { RoomParticipants } from './components/RoomParticipants.js';
 import { MessageList } from './components/MessageList.js';
 import { User } from './components/User.js';
+import { FindUser } from './components/FindUser.js';
 import { Grid, Row, Col, Navbar } from 'react-bootstrap';
 
 class App extends Component {
@@ -18,8 +19,8 @@ class App extends Component {
   activeRoom(room) {
     this.setState({ activeRoom: room });
     const userRef = firebase.database().ref("presence/" + this.state.user.uid);
-    const roomKey = room === "" ? "" : room.key;
-    userRef.update({currentRoom: roomKey});
+    const roomObj = room === "" ? "" : room;
+    userRef.update({currentRoom: roomObj.key, roomName: roomObj.title});
   }
 
   setUser(user) {
@@ -84,6 +85,9 @@ class App extends Component {
                     {roomParticipants}
                 </Col>
                 {roomList}
+                <FindUser
+                  firebase={firebase}
+                />
               </Navbar.Collapse>
             </Navbar>
           </Col>
