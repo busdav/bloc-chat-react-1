@@ -21,3 +21,8 @@ body::-webkit-scrollbar-thumb {
   background-color: #a39ea1;
   width: .75rem;
 }
+
+.cursor-color-change:hover {
+  cursor: pointer;
+  color: #c7a3bc;
+}

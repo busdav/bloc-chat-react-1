@@ -115,7 +115,7 @@ export class RoomList extends Component {
                   </DropdownButton>
                 : <div className="no-options"></div>
                 }
-              <h3 className="room-title" onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
+              <h3 className="room-title cursor-color-change" onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
             </div>
             }
           </li>

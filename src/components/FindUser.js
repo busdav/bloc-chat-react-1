@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl, Button } from 'react-bootstrap';
+import { FormGroup, FormControl, Table } from 'react-bootstrap';
+import '.././styles/FindUser.css';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -33,11 +34,14 @@ class FilteredUsers extends Component {
     const rows = [];
 
     this.props.users.forEach((user) => {
-      if (user.username.toLowerCase().indexOf(searchText.toLowerCase()) === -1) {
+      if (!searchText || user.username.toLowerCase().indexOf(searchText.toLowerCase()) === -1) {
         return;
       }
 
-      const isOnline = user.isOnline ? "Yes" : "No";
+      const isOnline = user.isOnline ?
+        <i alt="yes" className="fa fa-check"></i> :
+        <i alt="no" className="fa fa-times"></i>;
+        
       rows.push(
         <tr key={user.key}>
           <td>{user.username}</td>
@@ -48,7 +52,7 @@ class FilteredUsers extends Component {
     });
 
     return(
-      <table>
+      <Table responsive>
         <thead>
           <tr>
             <th>Name</th>
@@ -59,7 +63,7 @@ class FilteredUsers extends Component {
           <tbody>
             {rows}
           </tbody>
-      </table>
+      </Table>
     );
   }
 }
@@ -125,11 +129,13 @@ export class FindUser extends React.Component {
     const userList = this.state.userList;
     return (
       <div>
-        <Button
-          bsSize="small"
+        <p
+          id="find-user"
+          className="cursor-color-change"
           onClick={this.toggleList}>
-            {this.state.isOpen ? "Hide" : "Find User"}
-        </Button>
+            <span className="fa fa-search"></span>
+            {this.state.isOpen ? " Hide" : " Find User"}
+        </p>
         {this.state.isOpen ? <FilterUsers users={userList} /> : null }
       </div>
     );

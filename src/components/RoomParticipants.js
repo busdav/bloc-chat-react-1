@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import '.././styles/RoomParticipants.css';
 
 export class RoomParticipants extends Component {
@@ -65,8 +64,12 @@ export class RoomParticipants extends Component {
 
     return(
       <div className="participants-section">
-        <p className="participants-heading">Room Paricipants</p>
-        <Button className="hide-participants-btn" bsSize="small" onClick={this.toggleList}>{this.state.isOpen ? "Hide" : "Show"}</Button>
+        <p className="participants-heading">
+          Room Participants |
+          <span className="cursor-color-change" onClick={this.toggleList}>
+            {this.state.isOpen ? " Hide" : " Show"}
+          </span>
+        </p>
         {this.state.isOpen ? roomParticipants : null }
       </div>
     );

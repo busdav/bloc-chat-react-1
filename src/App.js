@@ -80,14 +80,14 @@ class App extends Component {
                   setUser={this.setUser}
                   welcome={currentUser}
                 />
+                <FindUser
+                  firebase={firebase}
+                />
                 <Col xs={12} className="room-section">
                   <h2 className="active-room">{this.state.activeRoom.title || "Select a Room"}</h2>
                     {roomParticipants}
                 </Col>
                 {roomList}
-                <FindUser
-                  firebase={firebase}
-                />
               </Navbar.Collapse>
             </Navbar>
           </Col>

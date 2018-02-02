@@ -23,11 +23,6 @@
   vertical-align: middle;
 }
 
-.room-title:hover {
-  cursor: pointer;
-  color: #c7a3bc;
-}
-
 .room-options {
   width: 1.75rem;
   height: 1.75rem;
