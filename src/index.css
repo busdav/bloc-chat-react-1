@@ -10,6 +10,7 @@ html {
 
 body {
   font-family: "Roboto", sans-serif;
+  color: #181b1b;
 }
 
 body::-webkit-scrollbar, .navbar::-webkit-scrollbar-track  {

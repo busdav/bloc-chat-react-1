@@ -6,12 +6,19 @@ import '.././styles/RoomList.css';
 export class RoomList extends Component {
   constructor(props) {
     super(props);
-      this.state = {title: "", creator: "", rooms: [], toEdit: ""};
+      this.state = {title: "", creator: "", rooms: [], toEdit: "", isOpen: false};
       this.roomsRef = this.props.firebase.database().ref("rooms");
       this.handleChange = this.handleChange.bind(this);
       this.createRoom = this.createRoom.bind(this);
       this.editRoom = this.editRoom.bind(this);
       this.updateRoom = this.updateRoom.bind(this);
+      this.toggleCreateRoom = this.toggleCreateRoom.bind(this);
+  }
+
+  toggleCreateRoom() {
+    this.setState( prevState => ({
+      isOpen: !prevState.isOpen
+    }));
   }
 
   handleChange(e) {
@@ -25,7 +32,7 @@ export class RoomList extends Component {
   createRoom(e) {
     e.preventDefault();
     this.roomsRef.push({ title: this.state.title, creator: this.state.creator });
-    this.setState({ title: "", creator: ""});
+    this.setState({ title: "", creator: "", isOpen: false});
   }
 
   deleteRoom(roomKey) {
@@ -124,7 +131,15 @@ export class RoomList extends Component {
 
     return(
       <Col xs={12} className="room-list">
+      <div>
+        <h3 id="create-room" onClick={this.toggleCreateRoom}>
+          create a room
+        </h3>
+      </div>
+      {this.state.isOpen ?
         <Navbar.Form>{roomForm}</Navbar.Form>
+        : null
+      }
         <TransitionGroup
           component="ul">
             {roomList}

@@ -6,6 +6,17 @@
   font-size: 1.75rem;
 }
 
+#create-room {
+  text-align: right;
+  border-bottom: .1rem solid #717171;
+  color: #717171;
+  font-size: 1.25rem;
+}
+
+#create-room:hover {
+  cursor: pointer;
+}
+
 .room-list, .room-list ul, .room-section {
   padding: 0;
 }
@@ -16,7 +27,7 @@
 
 .room-title {
   font-family: "Raleway", sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-top: 0;
   margin-bottom: 0;
   display: inline;
@@ -70,10 +81,6 @@
 }
 
 @media (max-width: 991px) and (min-width: 767px) {
-  .active-room {
-    font-size: 1.5rem;
-  }
-
   .room-title {
     font-size: 1rem;
   }

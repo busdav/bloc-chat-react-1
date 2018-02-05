@@ -140,13 +140,13 @@ export class MessageList extends Component {
         classNames="message-transition"
         timeout={200}>
         <li>
+          <Moment
+            element="span"
+            format="MM/DD/YY hh:mm A"
+            className="msg-sent-at">
+            {message.sentAt}
+          </Moment>
           <h4 className="msg-username">{message.username}</h4>
-            <Moment
-              element="span"
-              format="MM/DD/YY hh:mm A"
-              className="msg-sent-at">
-              {message.sentAt}
-            </Moment>
           {(this.state.toEdit === message.key) && (this.props.user.displayName === message.username) ?
             this.editMessage(message)
             :
