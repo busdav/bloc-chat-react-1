@@ -53,17 +53,17 @@ export class RoomParticipants extends Component {
   render() {
     const roomParticipants = (
       this.state.participants.map((participant) =>
-      <div key={participant.key}>
-        <h4 className="participant-name">
-          {participant.username}
-          <span><small>{participant.isTyping ? " is typing..." : null}</small></span>
-        </h4>
-      </div>
+        <div key={participant.key}>
+          <h4 className="participant-name">
+            {participant.username}
+            <span><small>{participant.isTyping ? " is typing..." : null}</small></span>
+          </h4>
+        </div>
       )
     );
 
     return(
-      <div className="participants-section">
+      <div>
         <p className="participants-heading">
           Room Participants |
           <span className="cursor-color-change" onClick={this.toggleList}>

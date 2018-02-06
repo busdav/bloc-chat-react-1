@@ -37,7 +37,7 @@ componentDidMount() {
       isOnline.on("value", snapshot => {
         if (snapshot.val()) {
           userRef.update({username: user.displayName, isOnline: true});
-          userRef.onDisconnect().update({isOnline: false, currentRoom: ""});
+          userRef.onDisconnect().update({isOnline: false, currentRoom: "", roomName: ""});
         }
       });
     }
@@ -49,11 +49,17 @@ componentDidMount() {
       <div className="login-section">
         <h5>Welcome, {this.props.welcome}</h5>
         { this.props.welcome === "Guest" ?
-          <h6 onClick={this.signIn}>Sign In <i className="fa fa-sign-in"></i></h6>
+          <h6 className="cursor-color-change"
+            onClick={this.signIn}>
+              Sign In <i className="fa fa-sign-in"></i>
+          </h6>
           :
-          <h6 onClick={this.signOut}>Sign Out <i className="fa fa-sign-out"></i></h6>
+          <h6 className="cursor-color-change"
+            onClick={this.signOut}>
+              Sign Out <i className="fa fa-sign-out"></i>
+          </h6>
         }
       </div>
-    )
+    );
   }
 }

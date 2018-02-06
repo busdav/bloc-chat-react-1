@@ -19,8 +19,9 @@ class App extends Component {
   activeRoom(room) {
     this.setState({ activeRoom: room });
     const userRef = firebase.database().ref("presence/" + this.state.user.uid);
-    const roomObj = room === "" ? "" : room;
-    userRef.update({currentRoom: roomObj.key, roomName: roomObj.title});
+    const roomKey = room === "" ? "" : room.key;
+    const roomTitle = room === "" ? "" : room.title;
+    userRef.update({currentRoom: roomKey, roomName: roomTitle});
   }
 
   setUser(user) {
@@ -28,10 +29,8 @@ class App extends Component {
   }
 
   render() {
-    let messageList;
-    let currentUser;
-    let roomList;
-    let roomParticipants;
+    let messageList, currentUser, roomList, roomParticipants, findUser;
+
     if (this.state.user !== null) {
       roomList = (
         <RoomList
@@ -41,6 +40,11 @@ class App extends Component {
         />
       );
       currentUser = this.state.user.displayName;
+      findUser = (
+        <FindUser
+          firebase={firebase}
+        />
+      );
     }
     else {
       currentUser = "Guest";
@@ -80,9 +84,7 @@ class App extends Component {
                   setUser={this.setUser}
                   welcome={currentUser}
                 />
-                <FindUser
-                  firebase={firebase}
-                />
+                {findUser}
                 <Col xs={12} className="room-section">
                   <h2 className="active-room">{this.state.activeRoom.title || "Select a Room"}</h2>
                     {roomParticipants}

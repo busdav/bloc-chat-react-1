@@ -96,7 +96,7 @@ export class RoomList extends Component {
       <form onSubmit={this.createRoom}>
         <FormGroup>
           <InputGroup>
-            <FormControl type="text" name="title" value={this.state.title} placeholder="New Room" onChange={this.handleChange}/>
+            <FormControl type="text" name="title" value={this.state.title} placeholder="New Room" onChange={this.handleChange} />
             <InputGroup.Button>
               <Button type="submit">Create</Button>
             </InputGroup.Button>
@@ -110,19 +110,27 @@ export class RoomList extends Component {
         key={room.key}
         classNames="room-transition"
         timeout={{ enter: 500, exit: 300 }}>
-          <li>
+          <li className="room-list-item">
             {this.state.toEdit === room.key ?
               this.editRoom(room)
             :
             <div className="room-block">
                 {this.props.user === room.creator ?
-                  <DropdownButton noCaret title={<span className="fa fa-angle-double-down"></span>} id="bg-nested-dropdown" className="room-options">
+                  <DropdownButton
+                    noCaret
+                    title={<span className="fa fa-angle-double-down"></span>}
+                    id="bg-nested-dropdown"
+                    className="room-options"
+                  >
                     <MenuItem onClick={() => this.setState({toEdit: room.key})}>Edit</MenuItem>
                     <MenuItem onClick={() => this.deleteRoom(room.key)}>Delete</MenuItem>
                   </DropdownButton>
                 : <div className="no-options"></div>
                 }
-              <h3 className="room-title cursor-color-change" onClick={(e) => this.selectRoom(room, e)}>{room.title}</h3>
+              <h3 className="room-title cursor-color-change"
+                onClick={(e) => this.selectRoom(room, e)}>
+                {room.title}
+              </h3>
             </div>
             }
           </li>

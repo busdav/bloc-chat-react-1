@@ -119,16 +119,16 @@ export class MessageList extends Component {
       <form onSubmit={this.createMessage}>
         <FormGroup>
           <InputGroup>
-          <FormControl
-            type="text"
-            value={this.state.content}
-            placeholder="Enter Message"
-            onChange={this.handleChange}
-            onKeyDown={this.handleKeyDown}
-          />
-          <InputGroup.Button>
-            <Button type="submit">Send</Button>
-          </InputGroup.Button>
+            <FormControl
+              type="text"
+              value={this.state.content}
+              placeholder="Enter Message"
+              onChange={this.handleChange}
+              onKeyDown={this.handleKeyDown}
+            />
+            <InputGroup.Button>
+              <Button type="submit">Send</Button>
+            </InputGroup.Button>
           </InputGroup>
         </FormGroup>
       </form>
@@ -139,7 +139,7 @@ export class MessageList extends Component {
         key={message.key}
         classNames="message-transition"
         timeout={200}>
-        <li>
+        <li className="message-item">
           <Moment
             element="span"
             format="MM/DD/YY hh:mm A"
@@ -167,16 +167,16 @@ export class MessageList extends Component {
     );
 
     return(
-        <Col sm={9} xs={12} className="message-section">
-            <Col xs={12} className="message-list">
-              <TransitionGroup
-                component="ul">
-                  {messageList}
-              </TransitionGroup>
-              <div ref={(latest) => this.latestMessage = latest} />
-            </Col>
-            <Col xs={12} className="message-bar">{messageBar}</Col>
-        </Col>
+      <Col sm={9} xs={12} className="message-section">
+          <Col xs={12} className="message-list">
+            <TransitionGroup
+              component="ul">
+                {messageList}
+            </TransitionGroup>
+            <div ref={(latest) => this.latestMessage = latest} />
+          </Col>
+          <Col xs={12} className="message-bar">{messageBar}</Col>
+      </Col>
     );
   }
 }

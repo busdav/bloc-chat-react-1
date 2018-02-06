@@ -28,7 +28,7 @@ class SearchBar extends Component {
   }
 }
 
-class FilteredUsers extends Component {
+class UserTable extends Component {
   render() {
     const searchText = this.props.searchText;
     const rows = [];
@@ -41,7 +41,7 @@ class FilteredUsers extends Component {
       const isOnline = user.isOnline ?
         <i alt="yes" className="fa fa-check"></i> :
         <i alt="no" className="fa fa-times"></i>;
-        
+
       rows.push(
         <tr key={user.key}>
           <td>{user.username}</td>
@@ -86,7 +86,7 @@ class FilterUsers extends Component {
           searchText={this.state.searchText}
           onChange={this.handleChange}
         />
-        <FilteredUsers
+        <UserTable
           users={this.props.users}
           searchText={this.state.searchText}
         />
