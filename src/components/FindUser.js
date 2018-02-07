@@ -14,7 +14,7 @@ class SearchBar extends Component {
 
   render() {
     return(
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <FormGroup>
           <FormControl
             type="text"

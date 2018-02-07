@@ -15,6 +15,13 @@ export class MessageList extends Component {
       this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
+  validateMessage(str) {
+    const msgContent = str || this.state.content;
+    const msgLength = msgContent.trim().length;
+    if (msgLength > 0 ) { return true; }
+    else { return false; }
+  }
+
   handleKeyDown(e) {
     const userRef = this.props.firebase.database().ref("presence/" + this.props.user.uid);
     userRef.update({isTyping: true});
@@ -35,12 +42,14 @@ export class MessageList extends Component {
   createMessage(e) {
     const messagesRef = this.props.firebase.database().ref("messages/" + this.props.activeRoom);
     e.preventDefault();
-    messagesRef.push({
-      username: this.state.username,
-      content: this.state.content,
-      sentAt: this.state.sentAt
-    });
-    this.setState({ username: "", content: "", sentAt: ""});
+    if (this.validateMessage()) {
+      messagesRef.push({
+        username: this.state.username,
+        content: this.state.content,
+        sentAt: this.state.sentAt
+      });
+      this.setState({ username: "", content: "", sentAt: ""});
+    }
   }
 
   editMessage(message) {
@@ -66,10 +75,12 @@ export class MessageList extends Component {
 
   updateMessage(e) {
     e.preventDefault();
-    const messagesRef = this.props.firebase.database().ref("messages/" + this.props.activeRoom);
-    const updates = {[this.state.toEdit + "/content"]: this.input.value};
-    messagesRef.update(updates);
-    this.setState({ toEdit: ""});
+    if (this.validateMessage(this.input.value)) {
+      const messagesRef = this.props.firebase.database().ref("messages/" + this.props.activeRoom);
+      const updates = {[this.state.toEdit + "/content"]: this.input.value};
+      messagesRef.update(updates);
+      this.setState({ toEdit: ""});
+    }
   }
 
   componentDidMount() {

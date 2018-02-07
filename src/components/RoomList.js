@@ -15,6 +15,13 @@ export class RoomList extends Component {
       this.toggleCreateRoom = this.toggleCreateRoom.bind(this);
   }
 
+  validateRoomName(str) {
+    const roomTitle = str || this.state.title;
+    const roomLength = roomTitle.trim().length;
+    if (roomLength > 0 ) { return true; }
+    else { return false; }
+  }
+
   toggleCreateRoom() {
     this.setState( prevState => ({
       isOpen: !prevState.isOpen
@@ -31,8 +38,10 @@ export class RoomList extends Component {
 
   createRoom(e) {
     e.preventDefault();
-    this.roomsRef.push({ title: this.state.title, creator: this.state.creator });
-    this.setState({ title: "", creator: "", isOpen: false});
+    if (this.validateRoomName()) {
+      this.roomsRef.push({ title: this.state.title, creator: this.state.creator });
+      this.setState({ title: "", creator: "", isOpen: false});
+    }
   }
 
   deleteRoom(roomKey) {
@@ -68,9 +77,11 @@ export class RoomList extends Component {
 
   updateRoom(e) {
     e.preventDefault();
-    const updates = {[this.state.toEdit + "/title"]: this.input.value};
-    this.roomsRef.update(updates);
-    this.setState({ toEdit: ""});
+    if (this.validateRoomName(this.input.value)){
+      const updates = {[this.state.toEdit + "/title"]: this.input.value};
+      this.roomsRef.update(updates);
+      this.setState({ toEdit: ""});
+    }
   }
 
   componentDidMount() {
