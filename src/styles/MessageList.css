@@ -60,6 +60,14 @@
   background-color: rgba(66, 61, 48, 0.1);
 }
 
+.msg-updated-at {
+  float: right;
+  font-size: .75rem;
+  background: none;
+  padding-top: .5rem;
+  padding-right: .5rem;
+}
+
 .message-transition-enter {
   opacity: 0.75;
 }

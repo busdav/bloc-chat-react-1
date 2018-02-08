@@ -76,8 +76,11 @@ export class MessageList extends Component {
   updateMessage(e) {
     e.preventDefault();
     if (this.validateMessage(this.input.value)) {
-      const messagesRef = this.props.firebase.database().ref("messages/" + this.props.activeRoom);
-      const updates = {[this.state.toEdit + "/content"]: this.input.value};
+      const updatedTime =  this.props.firebase.database.ServerValue.TIMESTAMP;
+      const messagesRef = this.props.firebase.database().ref("messages/" + this.props.activeRoom + "/" + this.state.toEdit);
+      const updates = {};
+      updates["/content"] = this.input.value;
+      updates["/updatedTime"] = updatedTime;
       messagesRef.update(updates);
       this.setState({ toEdit: ""});
     }
@@ -92,7 +95,8 @@ export class MessageList extends Component {
             key: message.key,
             username: message.val().username,
             content: message.val().content,
-            sentAt: message.val().sentAt
+            sentAt: message.val().sentAt,
+            updatedTime : message.val().updatedTime
           });
       });
       this.setState({ messages: messageChanges});
@@ -116,7 +120,8 @@ export class MessageList extends Component {
               key: message.key,
               username: message.val().username,
               content: message.val().content,
-              sentAt: message.val().sentAt
+              sentAt: message.val().sentAt,
+              updatedTime: message.val().updatedTime
             });
         });
         this.setState({ messages: messageChanges});
@@ -157,6 +162,17 @@ export class MessageList extends Component {
             className="msg-sent-at">
             {message.sentAt}
           </Moment>
+          {message.updatedTime ?
+            <span className="msg-updated-at">
+            Edited on: {" "}
+              <Moment
+                element="span"
+                format="MM/DD/YY hh:mm A">
+                {message.updatedTime}
+              </Moment>
+            </span>
+            : null
+          }
           <h4 className="msg-username">{message.username}</h4>
           {(this.state.toEdit === message.key) && (this.props.user.displayName === message.username) ?
             this.editMessage(message)
