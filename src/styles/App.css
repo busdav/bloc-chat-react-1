@@ -74,6 +74,10 @@
   }
 
   .sidenav {
-    overflow-x: hidden;
+   overflow-x: hidden;
+  }
+
+  .navbar-default .navbar-collapse {
+    max-height: 80vh;
   }
 }
